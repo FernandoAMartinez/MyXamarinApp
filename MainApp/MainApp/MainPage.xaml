@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="MainApp.MainPage" Visual="Material">
+
+    <StackLayout x:Name="baseStack" BackgroundColor="Accent" >
+        <!-- Place new controls here -->
+        <Frame BorderColor="Black" BackgroundColor="Transparent">
+            <Label x:Name="appInfo" HorizontalOptions="Center" Text="Welcome!" VerticalOptions="CenterAndExpand"/>
+        </Frame>
+        <Frame BorderColor="Black" BackgroundColor="Transparent" CornerRadius="500" HorizontalOptions="Center">
+            <Label x:Name="counterLabel" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" />
+        </Frame>
+        <Frame BorderColor="Black" BackgroundColor="Transparent">
+            <Label x:Name="acelerometerInfoX" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" Text="X:"/>
+        </Frame>
+        <Frame BorderColor="Black" BackgroundColor="Transparent">
+            <Label x:Name="acelerometerInfoY" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" Text="Y:"/>
+        </Frame>
+        <Frame BorderColor="Black" BackgroundColor="Transparent">
+            <Label x:Name="acelerometerInfoZ" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" Text="Z:"/>
+        </Frame>
+        <Button Text="Click Me!" 
+                Clicked="Button_Clicked" 
+                BorderColor="Black" 
+                Font="Roboto" 
+                HorizontalOptions="Fill" 
+                VerticalOptions="End" 
+                Visual="Material"/>
+        <Button Text="Go To Login" Clicked="Button_Clicked_1"/>
+
+    </StackLayout>
+</ContentPage>
