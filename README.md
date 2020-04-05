@@ -1,6 +1,6 @@
 # Covid-19 Country Stats App
 
-The following App developed in Xamarin with Xamarin.Forms retrieve de current cases for a requested Country.
+The following App developed in Xamarin with Xamarin.Forms retrieve the current cases for a requested Country.
 It consumes the following API published in RapidAPI (Requires Register).
 
 KishCom's COVID-19 API: https://rapidapi.com/KishCom/api/covid-19-coronavirus-statistics
