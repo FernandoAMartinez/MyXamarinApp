@@ -1,4 +1,4 @@
-# MyXamarinApp
+# Covid-19 Country Stats App
 
 The following App developed in Xamarin with Xamarin.Forms retrieve de current cases for a requested Country.
 It consumes the following API published in RapidAPI (Requires Register).
