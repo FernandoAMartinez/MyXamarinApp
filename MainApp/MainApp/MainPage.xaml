@@ -6,31 +6,107 @@
              mc:Ignorable="d"
              x:Class="MainApp.MainPage" Visual="Material">
 
-    <StackLayout x:Name="baseStack" BackgroundColor="Accent" >
-        <!-- Place new controls here -->
-        <Frame BorderColor="Black" BackgroundColor="Transparent">
-            <Label x:Name="appInfo" HorizontalOptions="Center" Text="Welcome!" VerticalOptions="CenterAndExpand"/>
+    <StackLayout BackgroundColor="#E8EAF6">
+        <Frame BackgroundColor="#3F51B5" Margin="5" Visual="Material">
+            <Label Text="Local COVID-19 Cases"
+                   TextColor="White"
+                   FontAttributes="Bold"
+                   x:Name="titleLabel"
+                   HorizontalOptions="Center"
+                   VerticalOptions="CenterAndExpand"
+                   FontSize="Large"/>
         </Frame>
-        <Frame BorderColor="Black" BackgroundColor="Transparent" CornerRadius="500" HorizontalOptions="Center">
-            <Label x:Name="counterLabel" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" />
+        <Frame HorizontalOptions="Fill" Margin="5, -5" Padding="5" Visual="Material">
+            <SearchBar x:Name="countrySearchBar"
+                       Placeholder="Find your country stats..." 
+                       SearchButtonPressed="OnCountrySearchPressed"
+                       HorizontalOptions="Fill"/>
         </Frame>
-        <Frame BorderColor="Black" BackgroundColor="Transparent">
-            <Label x:Name="acelerometerInfoX" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" Text="X:"/>
-        </Frame>
-        <Frame BorderColor="Black" BackgroundColor="Transparent">
-            <Label x:Name="acelerometerInfoY" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" Text="Y:"/>
-        </Frame>
-        <Frame BorderColor="Black" BackgroundColor="Transparent">
-            <Label x:Name="acelerometerInfoZ" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" Text="Z:"/>
-        </Frame>
-        <Button Text="Click Me!" 
-                Clicked="Button_Clicked" 
-                BorderColor="Black" 
-                Font="Roboto" 
-                HorizontalOptions="Fill" 
-                VerticalOptions="End" 
-                Visual="Material"/>
-        <Button Text="Go To Login" Clicked="Button_Clicked_1"/>
+        <Frame HorizontalOptions="Fill" 
+               Margin="5" 
+               Visual="Material">
+            <ListView x:Name="listViewCases"
+                  Margin="5"
+                  HasUnevenRows="True" 
+                  ItemsSource="{Binding itemList}"
+                  SelectionMode="None"
+                  HorizontalOptions="Fill">
+                <!--Item Header-->
+                <ListView.Header>
+                    <StackLayout Orientation="Horizontal" 
+                             HorizontalOptions="Fill" 
+                             Margin="5"
+                             Visual="Material">
+                        <Label x:Name="labelTitle" 
+                           Text="Result of Cases" 
+                           FontAttributes="Bold" 
+                           FontSize="Large"
+                           HorizontalOptions="Fill"/>
+                    </StackLayout>
+                </ListView.Header>
 
+                <!--Item Template-->
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Spacing="5"
+                                         Padding="5"
+                                         Margin="5" 
+                                         HorizontalOptions="Fill"
+                                         Visual="Material">
+                                <Label Text="Country:" 
+                                       FontSize="Medium"
+                                       TextColor="Black"
+                                       FontAttributes="Bold"
+                                       Visual="Material"/>
+                                <Entry Text="{Binding Country}" 
+                                       IsEnabled="False"
+                                       FontSize="Medium"
+                                       TextColor="Black"
+                                       Visual="Material"/>
+                                <Label Text="Confirmed Cases:" 
+                                       FontSize="Medium"
+                                       TextColor="Black"
+                                       FontAttributes="Bold"
+                                       Visual="Material"/>
+                                <Entry Text="{Binding Confirmed}" 
+                                       IsEnabled="False"
+                                       FontSize="Medium"
+                                       TextColor="Black"
+                                       Visual="Material"/>
+                                <Label Text="Deaths:" 
+                                       FontSize="Medium"
+                                       TextColor="Black"
+                                       FontAttributes="Bold"
+                                       Visual="Material"/>
+                                <Entry Text="{Binding Deaths}"
+                                       IsEnabled="False"
+                                       FontSize="Medium"
+                                       TextColor="Black"
+                                       Visual="Material"/>
+                                <Label Text="Recovered Cases:" 
+                                   FontSize="Medium"
+                                   TextColor="Black"
+                                   FontAttributes="Bold"
+                                       Visual="Material"/>
+                                <Entry Text="{Binding Recovered}" 
+                                   IsEnabled="False"
+                                   FontSize="Medium"
+                                   TextColor="Black"
+                                       Visual="Material"/>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Frame>
+            <ActivityIndicator x:Name="serviceIndicator" 
+                               IsRunning="False"
+                               IsEnabled="False"
+                               IsVisible="False"
+                               BackgroundColor="Transparent"
+                               Color="Orange"
+                               VerticalOptions="Center"
+                               Visual="Material"/>
     </StackLayout>
 </ContentPage>

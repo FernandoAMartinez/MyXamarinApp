@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xamarin.Forms;
-using Xamarin.Essentials;
+using Entity;
+using BusinessLogic;
+using System.Collections.ObjectModel;
 
 namespace MainApp
 {
@@ -14,56 +12,54 @@ namespace MainApp
     [DesignTimeVisible(false)]
     public partial class MainPage : ContentPage
     {
-        public int Counter { get; set; }
+        ObservableCollection<CovidStat> itemList;
 
-        SensorSpeed Speed = SensorSpeed.UI;
+        public bool IsWorking { get; set; }
+
         public MainPage()
         {
             InitializeComponent();
-            Counter = 0;
-            Accelerometer.ReadingChanged += Accelerometer_ReadingChanged;
-            ToggleAccelerometer();
         }
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+        }
+        private async void RefreshServiceCall(string country)
+        {
+            if (!IsWorking)
+            {
+                StartService();
+                Statistics statistics = await StatisticsService.Instance.GetUpdatedCasesAsync(country);
+                if(statistics != null)
+                {
+                    StopService();
+                    itemList = new ObservableCollection<CovidStat>();
+                    if(statistics.Data != null)
+                        foreach (CovidStat data in statistics.Data.CovidStats)
+                            itemList.Add(data);
 
-        private void Button_Clicked(object sender, EventArgs e)
-        {
-            Counter += 1;
-            counterLabel.FontSize = Counter;
-            counterLabel.Text = Counter.ToString();
-        }
-
-        //Inicio Modificación - FernandoAMartinez - dd/MM/yyyy
-        private void Accelerometer_ReadingChanged(object sender, AccelerometerChangedEventArgs e)
-        {
-            var data = e.Reading;
-            acelerometerInfoX.Text = $"Reading: X: {data.Acceleration.X}";
-            acelerometerInfoY.Text = $"Reading: Y: {data.Acceleration.Y}";
-            acelerometerInfoZ.Text = $"Reading: Z: {data.Acceleration.Z}";
-            // Process Acceleration X, Y, and Z
-        }
-        public void ToggleAccelerometer()
-        {
-            try
-            {
-                if (Accelerometer.IsMonitoring)
-                    Accelerometer.Stop();
-                else
-                    Accelerometer.Start(Speed);
+                    listViewCases.ItemsSource = itemList;
             }
-            catch (FeatureNotSupportedException fnsEx)
-            {
-                // Feature not supported on device
-            }
-            catch (Exception ex)
-            {
-                // Other error has occurred.
+            else StopService();
             }
         }
 
-        private void Button_Clicked_1(object sender, EventArgs e)
+        private void StartService()
         {
-            Navigation.PushAsync(new TabbedPage1());
+            IsWorking = true;
+            serviceIndicator.IsEnabled = true;
+            serviceIndicator.IsVisible = true;
+            serviceIndicator.IsRunning = true;
         }
-        //Fin Modificación - FernandoAMartinez - dd/MM/yyyy
+        private void StopService()
+        {
+            IsWorking = false;
+            serviceIndicator.IsEnabled = false;
+            serviceIndicator.IsVisible = false;
+            serviceIndicator.IsRunning = false;
+        }
+
+        private void OnCountrySearchPressed(object sender, EventArgs e) =>
+            RefreshServiceCall(countrySearchBar.Text);
     }
 }
